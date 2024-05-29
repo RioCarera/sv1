@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Sederhana</title>
+    <style>
+        /* CSS untuk kalkulator */
+        .calculator {
+            width: 350px;
+            margin: 0 auto;
+            border: 0px solid #ccc;
+            padding: 10px;
+            text-align: center;
+	    background-color: #000000; /* Warna latar belakang kalkulator */
+        }
+
+        .buttons button {
+            width: 100px;
+            height: 50px;
+            margin: 5px;
+            font-size: 20px;
+            background-color: #FFC0CB; /* Warna latar belakang tombol default */
+            color: #000000; /* Warna teks tombol */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buttons button:hover {
+            background-color: #FF0CB; /* Warna saat tombol dihover */
+        }
+
+
+        #display {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 5px;
+            font-size: 24px;
+            text-align: right;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+
+        }
+
+        .buttons button.clearDisplay {
+            background-color: #ff0000;
+            color: #ff0000;
+        }
+
+        .buttons button.operator {
+            background-color: #ffcc00;
+            color: #ffffff;
+        }
+
+        .buttons button.clear {
+            background-color: #ff6666;
+            color: #ffffff;
+        }
+
+        .buttons button.custom1 {
+            background-color: #00bfff;
+            color: #ffffff;
+        }
+
+        .buttons button.custom2 {
+            background-color: #800080;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+	    <button onclick="deleteLast()">←</button> <!-- Tombol untuk menghapus satu angka -->
+ 	    <button onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('*')">*</button>
+            <button onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="custom1" onclick="appendToDisplay('SINGGIH'); playSound('singgih')">SINGGIH</button>
+            <button class="custom2" onclick="appendToDisplay('VINNGKA'); playSound('vinngka')">VINNGKA</button
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button onclick="appendToDisplay('0')">0</button>
+	    <button onclick="appendToDisplay('000')">000</button>
+	    <button class="operator" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+    <audio id="sound-singgih" src="singgih.mp3"></audio> <!-- File audio untuk tombol "SINGGIH" -->
+    <audio id="sound-vinngka" src="vinngka.mp3"></audio> <!-- File audio untuk tombol "VINNGKA" -->
+    <script>
+        // Fungsi untuk menambahkan angka atau operasi matematika ke layar kalkulator
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        // Fungsi untuk menghapus isi layar kalkulator
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        // Fungsi untuk menghapus satu angka terakhir dari layar kalkulator
+        function deleteLast() {
+            var display = document.getElementById('display');
+            display.value = display.value.slice(0, -1);
+        }
+
+        // Fungsi untuk menghitung hasil dari ekspresi matematika
+        function calculateResult() {
+            try {
+     	        // Ambil nilai dari input display
+                var display = document.getElementById('display').value;
+
+                // Periksa jika ekspresi mengandung operasi khusus "SINGGIH+VINNGKA"
+                if (display === 'SINGGIH+VINNGKA') {
+                    document.getElementById('display').value = 'PUPUY';
+                // Periksa jika ekspresi mengandung operasi khusus "VINNGKA+SINGGIH"
+                } else if (display === 'VINNGKA+SINGGIH') {
+                    document.getElementById('display').value = 'PUPUY';
+        } else {
+            // Mengevaluasi ekspresi matematika yang ada di layar kalkulator
+            var result = eval(display);
+            document.getElementById('display').value = result;
+                }
+            } catch (e) {
+                // Menampilkan pesan error jika ekspresi tidak valid
+                document.getElementById('display').value = 'Error';
+            }
+        }
+        function playSound(soundId) {
+            var sound = document.getElementById('sound-' + soundId);
+            sound.play();
+        }
+    </script>
+</body>
+</html>
